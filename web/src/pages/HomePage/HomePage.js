@@ -1,34 +1,26 @@
-import { useState } from 'react'
 import QRCode from 'qrcode'
+
+import QRCodeComponent from 'src/components/QRCode'
+
 const HomePage = () => {
-  const [url, setUrl] = useState('')
-  const [qrCode, setQrCode] = useState(null)
-
-  const handleUrlChange = (event) => {
-    setUrl(event.target.value)
-  }
-
   const generateQRCode = async (url) => {
     try {
-      const qrCode = await QRCode.toDataURL(url)
-      return qrCode
-    } catch (error) {
-      console.error(error)
-      return null
+      const code = await QRCode.toDataURL(url)
+      return code
+    } catch (err) {
+      console.error(err)
     }
   }
-
-  const generateCode = async () => {
-    const code = await generateQRCode(url)
-    setQrCode(code)
-  }
-
+  console.log('Hello')
   return (
-    <div>
-      <input type="text" value={url} onChange={handleUrlChange} />
-      <button onClick={generateCode}>Generate QR Code</button>
-      {qrCode && <img src={qrCode} alt="QR code" />}
-    </div>
+    <>
+      <div>
+        <h1>QR Code Generator</h1>
+      </div>
+      <div>
+        <QRCodeComponent generate={generateQRCode} />
+      </div>
+    </>
   )
 }
 
